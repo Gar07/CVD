@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Color Blindness Corrector</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+</head>
+<body>
+    <video id="camera-stream" autoplay playsinline muted></video>
+    
+    <canvas id="gl-canvas"></canvas>
+
+    <div id="split-divider"></div>
+    <input type="range" id="split-slider" min="0" max="1" step="0.001" value="1.0">
+
+    <div id="top-controls">
+        <button id="btn-info" class="icon-btn">ℹ️ Info</button>
+        <label for="image-upload" class="icon-btn" style="cursor:pointer;">📁 Unggah</label>
+        <input type="file" id="image-upload" accept="image/*" style="display:none;">
+        <button id="btn-camera" class="icon-btn" style="display:none;">📷 Kamera</button>
+        
+        <button id="btn-split" class="icon-btn">🎚️ Split: OFF</button>
+        <button id="btn-torch" class="icon-btn">🔦 Senter</button>
+        <button id="btn-snapshot" class="icon-btn">📸 Simpan</button>
+    </div>
+
+    <div id="ui-panel">
+        <div class="slider-container">
+            <label for="intensity">Intensitas Koreksi (0 - 100%):</label>
+            <input type="range" id="intensity" min="0" max="1" step="0.01" value="1.0">
+        </div>
+        <div class="button-group">
+            <button class="mode-btn active" data-mode="0">Normal</button>
+            <button class="mode-btn" data-mode="1">Protan</button>
+            <button class="mode-btn" data-mode="2">Deutan</button>
+            <button class="mode-btn" data-mode="3">Tritan</button>
+        </div>
+        <p class="hint-text">💡 Geser layar ke kiri/kanan untuk fitur Split-Screen.</p>
+    </div>
+
+    <div id="edu-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>Pengetahuan Buta Warna (CVD)</h2>
+            <hr>
+            <div class="edu-section">
+                <h3>🔴 Protanopia (Lemah Merah)</h3>
+                <p>Ketiadaan sel kerucut merah. Penderita sulit membedakan warna merah, hijau, kuning, dan coklat. Merah terlihat lebih gelap dari biasanya.</p>
+            </div>
+            <div class="edu-section">
+                <h3>🟢 Deuteranopia (Lemah Hijau)</h3>
+                <p>Ketiadaan sel kerucut hijau. Merupakan jenis paling umum. Sama seperti Protanopia, penderita sulit membedakan merah dan hijau, namun merah tidak terlihat segelap penderita Protanopia.</p>
+            </div>
+            <div class="edu-section">
+                <h3>🔵 Tritanopia (Lemah Biru)</h3>
+                <p>Ketiadaan sel kerucut biru. Sangat langka. Penderita sulit membedakan warna biru dari hijau, dan kuning dari ungu/merah muda.</p>
+            </div>
+            <div class="edu-section">
+                <h3>Bagaimana Aplikasi Ini Bekerja?</h3>
+                <p>Aplikasi ini memindahkan warna yang "hilang" (error) ke spektrum warna yang mata Anda masih bisa lihat dengan jelas menggunakan algoritma matematika <b>Daltonization</b> melalui GPU perangkat Anda.</p>
+            </div>
+        </div>
+    </div>
+    <div id="color-inspector" class="hidden">
+        <div id="color-box"></div>
+        <div id="color-info">
+            <span id="color-name">Menunggu...</span>
+            <span id="color-rgb">RGB: -</span>
+        </div>
+        <button id="close-inspector" class="icon-btn">❌</button>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

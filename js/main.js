@@ -1,0 +1,216 @@
+import { CameraManager } from './webcam.js';
+import { WebGLRenderer } from './renderer.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const videoElement = document.getElementById('camera-stream');
+    const canvasElement = document.getElementById('gl-canvas');
+    const renderer = new WebGLRenderer(canvasElement);
+    const camera = new CameraManager(videoElement);
+    
+    // --- 1. FITUR KAMERA & RENDERER ---
+    async function startCamera() {
+        const size = await camera.initCamera();
+        if (size) {
+            renderer.setSource(videoElement);
+            document.getElementById('btn-camera').style.display = 'none';
+        }
+    }
+    await startCamera();
+    renderer.resizeCanvas();
+    window.addEventListener('resize', () => renderer.resizeCanvas());
+    renderer.render();
+
+    // --- 2. FITUR UI KONTROL UTAMA ---
+    document.getElementById('intensity').addEventListener('input', (e) => renderer.setIntensity(parseFloat(e.target.value)));
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    modeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            modeButtons.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            renderer.setMode(parseInt(e.target.getAttribute('data-mode')));
+        });
+    });
+
+// ... (kode atas tetap sama) ...
+
+    // --- 3. FITUR SPLIT SCREEN (DIPERBARUI) ---
+    const btnSplit = document.getElementById('btn-split');
+    const splitSlider = document.getElementById('split-slider');
+    const splitDivider = document.getElementById('split-divider');
+    let isSplitActive = false;
+
+    // Toggle Mode Split
+    btnSplit.addEventListener('click', () => {
+        isSplitActive = !isSplitActive;
+        if (isSplitActive) {
+            btnSplit.innerText = "🎚️ Split: ON";
+            btnSplit.style.backgroundColor = "#4CAF50"; // Nyala hijau
+            splitSlider.classList.add('active');
+            splitDivider.classList.add('active');
+            
+            // Set ke tengah saat baru dinyalakan
+            splitSlider.value = 0.5;
+            renderer.setSplit(0.5);
+            splitDivider.style.left = '50%';
+        } else {
+            btnSplit.innerText = "🎚️ Split: OFF";
+            btnSplit.style.backgroundColor = "rgba(0, 0, 0, 0.6)"; // Mati
+            splitSlider.classList.remove('active');
+            splitDivider.classList.remove('active');
+            
+            // Kembalikan ke layar penuh (tidak ada split)
+            splitSlider.value = 1.0;
+            renderer.setSplit(1.0);
+            splitDivider.style.left = '100%';
+        }
+    });
+
+    splitSlider.addEventListener('input', (e) => {
+        if (!isSplitActive) return; // Abaikan jika split mati
+        const val = e.target.value;
+        renderer.setSplit(parseFloat(val));
+        splitDivider.style.left = (val * 100) + '%';
+    });
+
+    // --- FITUR SENTER (BARU) ---
+    const btnTorch = document.getElementById('btn-torch');
+    btnTorch.addEventListener('click', async () => {
+        const isNowOn = await camera.toggleTorch();
+        if (isNowOn) {
+            btnTorch.style.backgroundColor = '#4CAF50';
+        } else {
+            btnTorch.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        }
+    });
+
+    // --- FITUR SIMPAN FOTO (BARU) ---
+    const btnSnapshot = document.getElementById('btn-snapshot');
+    btnSnapshot.addEventListener('click', () => {
+        // Render ulang paksa sekali untuk memastikan buffer GPU siap digambar
+        renderer.render(); 
+        
+        // Ambil data gambar dari elemen canvas
+        const dataURL = canvasElement.toDataURL('image/png');
+        
+        // Buat elemen link tak terlihat untuk memicu unduhan
+        const downloadLink = document.createElement('a');
+        downloadLink.download = `CVD-Koreksi-${new Date().getTime()}.png`;
+        downloadLink.href = dataURL;
+        downloadLink.click();
+    });
+
+    // --- 4. FITUR UNGGAH GAMBAR (STATIC MODE) ---
+    const imageUpload = document.getElementById('image-upload');
+    const btnCamera = document.getElementById('btn-camera');
+    const imgElement = new Image(); // Objek gambar maya
+
+    imageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                imgElement.src = event.target.result;
+                imgElement.onload = () => {
+                    renderer.setSource(imgElement); // Ganti sumber tekstur ke gambar
+                    btnCamera.style.display = 'block'; // Tampilkan tombol kembali ke kamera
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    btnCamera.addEventListener('click', () => {
+        renderer.setSource(videoElement); // Kembalikan ke kamera
+        btnCamera.style.display = 'none';
+    });
+
+    // --- 5. FITUR MODAL EDUKASI ---
+    const modal = document.getElementById('edu-modal');
+    document.getElementById('btn-info').addEventListener('click', () => modal.classList.remove('hidden'));
+    document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('hidden'));
+    
+    // Registrasi PWA Service Worker (Tetap)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js');
+    }
+
+    // --- 6. FITUR COLOR INSPECTOR ---
+    const canvas = document.getElementById('gl-canvas');
+    const inspectorPanel = document.getElementById('color-inspector');
+    const colorBox = document.getElementById('color-box');
+    const colorNameText = document.getElementById('color-name');
+    const colorRgbText = document.getElementById('color-rgb');
+    const closeInspector = document.getElementById('close-inspector');
+
+    let isInspectorActive = true;
+
+    closeInspector.addEventListener('click', (e) => {
+        e.stopPropagation(); // Mencegah klik tembus ke canvas
+        inspectorPanel.classList.add('hidden');
+        isInspectorActive = false;
+        // Tampilkan kembali setelah 3 detik jika ingin dipakai lagi (opsional)
+        setTimeout(() => { isInspectorActive = true; }, 1000); 
+    });
+
+    // Database Warna Sederhana untuk deteksi (Bisa ditambah untuk skripsi)
+    const colorPalette = [
+        { name: 'Merah', r: 255, g: 0, b: 0 },
+        { name: 'Merah Tua', r: 139, g: 0, b: 0 },
+        { name: 'Hijau', r: 0, g: 255, b: 0 },
+        { name: 'Hijau Tua', r: 0, g: 100, b: 0 },
+        { name: 'Biru', r: 0, g: 0, b: 255 },
+        { name: 'Biru Muda', r: 135, g: 206, b: 235 },
+        { name: 'Kuning', r: 255, g: 255, b: 0 },
+        { name: 'Oranye', r: 255, g: 165, b: 0 },
+        { name: 'Ungu', r: 128, g: 0, b: 128 },
+        { name: 'Merah Muda', r: 255, g: 192, b: 203 },
+        { name: 'Coklat', r: 139, g: 69, b: 19 },
+        { name: 'Putih', r: 255, g: 255, b: 255 },
+        { name: 'Abu-abu', r: 128, g: 128, b: 128 },
+        { name: 'Hitam', r: 0, g: 0, b: 0 }
+    ];
+
+    // Algoritma Euclidean Distance untuk mencari warna terdekat
+    function getClosestColorName(r, g, b) {
+        let minDistance = Infinity;
+        let closestName = 'Tidak Diketahui';
+
+        for (let i = 0; i < colorPalette.length; i++) {
+            const c = colorPalette[i];
+            // Rumus jarak titik 3D
+            const distance = Math.sqrt(
+                Math.pow(c.r - r, 2) + 
+                Math.pow(c.g - g, 2) + 
+                Math.pow(c.b - b, 2)
+            );
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestName = c.name;
+            }
+        }
+        return closestName;
+    }
+
+    // Tangkap event klik/sentuh pada kanvas
+    canvas.addEventListener('click', (e) => {
+        if (!isInspectorActive) return;
+
+        // Dapatkan koordinat klik sesuai resolusi canvas sebenarnya
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;   
+        const scaleY = canvas.height / rect.height; 
+
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
+
+        // Ambil warna dari WebGL
+        const color = renderer.getPixelColor(Math.floor(x), Math.floor(y));
+        
+        // Update UI Inspector
+        inspectorPanel.classList.remove('hidden');
+        colorBox.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+        colorRgbText.innerText = `RGB: ${color.r}, ${color.g}, ${color.b}`;
+        colorNameText.innerText = getClosestColorName(color.r, color.g, color.b);
+    });
+});
