@@ -323,3 +323,66 @@ input[type="range"] {
     outline: none;
     font-size: 14px;
 }
+
+/* Live FPS Monitor */
+#fps-counter {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #00FF00;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 30;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none;
+}
+
+/* Transisi Halus untuk Immersive Mode */
+#top-controls, #ui-panel, #color-inspector {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Class untuk melempar menu ke luar layar */
+.immersive-hidden-top {
+    transform: translateY(-150%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.immersive-hidden-bottom {
+    transform: translateY(150%) translateX(-50%); /* Menjaga agar tetap di tengah sebelum turun */
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Tombol Tampilkan Menu (Muncul saat Immersive Mode) */
+#btn-show-ui {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 50;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: opacity 0.3s ease;
+}
+
+#btn-show-ui.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Tombol Instal PWA dengan warna mencolok */
+.install-btn {
+    background: #FF9800 !important;
+    border-color: #F57C00 !important;
+    font-weight: bold;
+}

@@ -10,7 +10,10 @@ export class WebGLRenderer {
         this.splitPosition = 1.0; // 1.0 = full layar koreksi
         this.sourceElement = null; // Bisa berupa <video> atau <img>
         this.appMode = 0; // 0 untuk Corrector, 1 untuk Simulator
-        
+        // Untuk menghitung FPS
+        this.lastTime = performance.now();
+        this.frameCount = 0;
+        this.fpsElement = document.getElementById('fps-counter');
         if (this.gl) this.initWebGL();
     }
 
@@ -94,6 +97,20 @@ export class WebGLRenderer {
     }
 
     render() {
+        // --- LOGIKA FPS COUNTER ---
+        const now = performance.now();
+        this.frameCount++;
+        if (now - this.lastTime >= 1000) { // Update setiap 1 detik
+            if (this.fpsElement) {
+                this.fpsElement.innerText = `FPS: ${this.frameCount}`;
+                // Ubah warna jika FPS drop di bawah 30
+                this.fpsElement.style.color = this.frameCount >= 30 ? '#00FF00' : '#FF0000';
+            }
+            this.frameCount = 0;
+            this.lastTime = now;
+        }
+        // --------------------------
+        
         if (this.sourceElement && (this.sourceElement.readyState >= 2 || this.sourceElement.complete)) {
             this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
             this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.sourceElement);

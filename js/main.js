@@ -234,4 +234,57 @@ document.addEventListener('DOMContentLoaded', async () => {
         colorRgbText.innerText = `RGB: ${color.r}, ${color.g}, ${color.b}`;
         colorNameText.innerText = getClosestColorName(color.r, color.g, color.b);
     });
+
+    // --- 7. IMMERSIVE MODE (SEMBUNYIKAN UI) ---
+    const topControls = document.getElementById('top-controls');
+    const uiPanel = document.getElementById('ui-panel');
+    const btnHideUI = document.getElementById('btn-hide-ui');
+    const btnShowUI = document.getElementById('btn-show-ui');
+
+    btnHideUI.addEventListener('click', () => {
+        topControls.classList.add('immersive-hidden-top');
+        uiPanel.classList.add('immersive-hidden-bottom');
+        if(!inspectorPanel.classList.contains('hidden')) {
+            inspectorPanel.classList.add('hidden');
+        }
+        btnShowUI.classList.remove('hidden');
+    });
+
+    btnShowUI.addEventListener('click', () => {
+        topControls.classList.remove('immersive-hidden-top');
+        uiPanel.classList.remove('immersive-hidden-bottom');
+        btnShowUI.classList.add('hidden');
+    });
+
+    // --- 8. CUSTOM PWA INSTALL BUTTON ---
+    let deferredPrompt;
+    const btnInstall = document.getElementById('btn-install');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Mencegah Chrome memunculkan prompt mini secara otomatis
+        e.preventDefault();
+        // Simpan event agar bisa dipicu nanti
+        deferredPrompt = e;
+        // Tampilkan tombol instal kita
+        btnInstall.style.display = 'block';
+    });
+
+    btnInstall.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            // Tunculkan prompt instalasi bawaan browser
+            deferredPrompt.prompt();
+            // Tunggu respon pengguna
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('Pengguna menginstal PWA');
+            }
+            deferredPrompt = null;
+            btnInstall.style.display = 'none'; // Sembunyikan tombol setelah ditekan
+        }
+    });
+
+    // Sembunyikan tombol jika aplikasi sudah diinstal / dijalankan dalam mode standalone
+    window.addEventListener('appinstalled', () => {
+        btnInstall.style.display = 'none';
+    });
 });

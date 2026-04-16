@@ -9,6 +9,7 @@
     <meta name="theme-color" content="#4CAF50">
 </head>
 <body>
+    <div id="fps-counter">FPS: 0</div>
     <video id="camera-stream" autoplay playsinline muted></video>
     
     <canvas id="gl-canvas"></canvas>
@@ -17,15 +18,19 @@
     <input type="range" id="split-slider" min="0" max="1" step="0.001" value="1.0">
 
     <div id="top-controls">
-        <button id="btn-info" class="icon-btn">ℹ️ Info</button>
+        <button id="btn-info" class="icon-btn">ℹ️ Edukasi</button>
         <label for="image-upload" class="icon-btn" style="cursor:pointer;">📁 Unggah</label>
         <input type="file" id="image-upload" accept="image/*" style="display:none;">
         <button id="btn-camera" class="icon-btn" style="display:none;">📷 Kamera</button>
-        
         <button id="btn-split" class="icon-btn">🎚️ Split: OFF</button>
         <button id="btn-torch" class="icon-btn">🔦 Senter</button>
         <button id="btn-snapshot" class="icon-btn">📸 Simpan</button>
+        
+        <button id="btn-hide-ui" class="icon-btn">👁️ Sembunyikan UI</button>
+        <button id="btn-install" class="icon-btn install-btn" style="display:none;">📲 Instal App</button>
     </div>
+
+    <button id="btn-show-ui" class="hidden">Tampilkan Menu</button>
 
     <div id="ui-panel">
         <div class="app-mode-toggle">
