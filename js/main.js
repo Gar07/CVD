@@ -20,18 +20,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.addEventListener('resize', () => renderer.resizeCanvas());
     renderer.render();
 
-    // --- 2. FITUR UI KONTROL UTAMA ---
-    document.getElementById('intensity').addEventListener('input', (e) => renderer.setIntensity(parseFloat(e.target.value)));
-    const modeButtons = document.querySelectorAll('.mode-btn');
-    modeButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            modeButtons.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            renderer.setMode(parseInt(e.target.getAttribute('data-mode')));
-        });
+    // --- 2. FITUR UI KONTROL UTAMA (DIPERBARUI) ---
+    const intensitySlider = document.getElementById('intensity');
+    const cvdSelect = document.getElementById('cvd-mode');
+    const appModeRadios = document.getElementsByName('appMode');
+
+    // Kontrol Intensitas
+    intensitySlider.addEventListener('input', (e) => {
+        renderer.setIntensity(parseFloat(e.target.value));
     });
 
-// ... (kode atas tetap sama) ...
+    // Kontrol Dropdown Jenis Buta Warna
+    cvdSelect.addEventListener('change', (e) => {
+        renderer.setMode(parseInt(e.target.value));
+    });
+
+    // Kontrol Sakelar Koreksi vs Simulasi
+    appModeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                renderer.setAppMode(parseInt(e.target.value));
+                
+                // Ubah aksen warna UI sebagai indikator
+                const uiPanel = document.getElementById('ui-panel');
+                if (e.target.value === "1") {
+                    // Warna Simulator (Oranye/Kuning)
+                    uiPanel.style.boxShadow = "0 4px 15px rgba(255, 152, 0, 0.4)";
+                } else {
+                    // Warna Korektor (Default Hitam/Abu)
+                    uiPanel.style.boxShadow = "0 4px 15px rgba(0,0,0,0.5)";
+                }
+            }
+        });
+    });
 
     // --- 3. FITUR SPLIT SCREEN (DIPERBARUI) ---
     const btnSplit = document.getElementById('btn-split');

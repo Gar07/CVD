@@ -9,6 +9,7 @@ export class WebGLRenderer {
         this.intensity = 1.0;
         this.splitPosition = 1.0; // 1.0 = full layar koreksi
         this.sourceElement = null; // Bisa berupa <video> atau <img>
+        this.appMode = 0; // 0 untuk Corrector, 1 untuk Simulator
         
         if (this.gl) this.initWebGL();
     }
@@ -77,9 +78,11 @@ export class WebGLRenderer {
         this.intensityLocation = this.gl.getUniformLocation(this.program, "u_intensity");
         this.splitLocation = this.gl.getUniformLocation(this.program, "u_splitPosition");
         this.scaleLocation = this.gl.getUniformLocation(this.program, "u_scale");
+        this.appModeLocation = this.gl.getUniformLocation(this.program, "u_appMode");
     }
 
     setSplit(position) { this.splitPosition = position; }
+    setAppMode(mode) { this.appMode = mode; }
     setMode(mode) { this.mode = mode; }
     setIntensity(intensity) { this.intensity = intensity; }
 
@@ -123,6 +126,7 @@ export class WebGLRenderer {
             this.gl.uniform1f(this.splitLocation, this.splitPosition);
 
             this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+            this.gl.uniform1i(this.appModeLocation, this.appMode);
         }
         requestAnimationFrame(() => this.render());
     }

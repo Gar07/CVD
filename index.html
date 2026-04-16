@@ -28,17 +28,43 @@
     </div>
 
     <div id="ui-panel">
+        <div class="app-mode-toggle">
+            <label class="radio-btn">
+                <input type="radio" name="appMode" value="0" checked> 🛠️ Koreksi
+            </label>
+            <label class="radio-btn">
+                <input type="radio" name="appMode" value="1"> 👁️ Simulasi
+            </label>
+        </div>
+
+        <div class="select-container">
+            <label for="cvd-mode">Jenis Buta Warna:</label>
+            <select id="cvd-mode">
+                <option value="0">Normal (Tanpa Efek)</option>
+                <optgroup label="Protan (Kelainan Merah)">
+                    <option value="1">Protanopia (Buta Merah Total)</option>
+                    <option value="2">Protanomali (Lemah Merah)</option>
+                </optgroup>
+                <optgroup label="Deutan (Kelainan Hijau)">
+                    <option value="3">Deuteranopia (Buta Hijau Total)</option>
+                    <option value="4">Deuteranomali (Lemah Hijau)</option>
+                </optgroup>
+                <optgroup label="Tritan (Kelainan Biru)">
+                    <option value="5">Tritanopia (Buta Biru Total)</option>
+                    <option value="6">Tritanomali (Lemah Biru)</option>
+                </optgroup>
+                <optgroup label="Lainnya">
+                    <option value="7">Achromatopsia (Monokrom / Hitam Putih)</option>
+                </optgroup>
+            </select>
+        </div>
+
         <div class="slider-container">
-            <label for="intensity">Intensitas Koreksi (0 - 100%):</label>
+            <label for="intensity">Intensitas Efek (0 - 100%):</label>
             <input type="range" id="intensity" min="0" max="1" step="0.01" value="1.0">
         </div>
-        <div class="button-group">
-            <button class="mode-btn active" data-mode="0">Normal</button>
-            <button class="mode-btn" data-mode="1">Protan</button>
-            <button class="mode-btn" data-mode="2">Deutan</button>
-            <button class="mode-btn" data-mode="3">Tritan</button>
-        </div>
-        <p class="hint-text">💡 Geser layar ke kiri/kanan untuk fitur Split-Screen.</p>
+        
+        <p class="hint-text">💡 Sentuh objek untuk deteksi warna | Geser layar untuk Split-Screen</p>
     </div>
 
     <div id="edu-modal" class="modal hidden">
