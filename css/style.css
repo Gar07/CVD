@@ -386,3 +386,95 @@ input[type="range"] {
     border-color: #F57C00 !important;
     font-weight: bold;
 }
+
+/* --- Styling Modal Multi-Tab Baru --- */
+.info-modal-content {
+    max-width: 600px;
+    padding: 25px;
+}
+
+.tab-navigation {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    color: #888;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #fff;
+}
+
+.tab-btn.active {
+    color: #4CAF50;
+    border-bottom: 3px solid #4CAF50;
+}
+
+.tab-divider {
+    border: 0;
+    height: 1px;
+    background: #444;
+    margin-bottom: 20px;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tipografi dalam Modal */
+.tab-content h2 {
+    color: #4CAF50;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.intro-text {
+    font-size: 14px;
+    color: #ddd;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.edu-section ul, .edu-section ol {
+    padding-left: 20px;
+    margin-top: 10px;
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.edu-section li {
+    margin-bottom: 8px;
+}
+
+.highlight-section {
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 4px solid #4CAF50;
+    padding: 15px;
+}
+
+.text-center {
+    text-align: center;
+}

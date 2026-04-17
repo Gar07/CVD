@@ -149,6 +149,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     const modal = document.getElementById('edu-modal');
     document.getElementById('btn-info').addEventListener('click', () => modal.classList.remove('hidden'));
     document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('hidden'));
+    // --- FITUR NAVIGASI TAB DI DALAM MODAL ---
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Hapus status aktif dari semua tombol dan konten
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            // Aktifkan tombol yang diklik
+            btn.classList.add('active');
+            
+            // Aktifkan konten yang sesuai dengan data-target
+            const targetId = btn.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
     
     // Registrasi PWA Service Worker (Tetap)
     if ('serviceWorker' in navigator) {
