@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cvd-corrector-v1';
+const CACHE_NAME = 'cvd-corrector';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
