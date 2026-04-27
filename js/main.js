@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Tangkap event klik/sentuh pada kanvas
     canvas.addEventListener('click', (e) => {
-        if (!isInspectorActive) return;
+        if (!isInspectorActive || isSplitActive) return;
 
         // Dapatkan koordinat klik sesuai resolusi canvas sebenarnya
         const rect = canvas.getBoundingClientRect();
@@ -261,6 +261,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Ambil warna dari WebGL
         const color = renderer.getPixelColor(Math.floor(x), Math.floor(y));
         
+        // --- LOGIKA BARU: DETEKSI INTENSITAS CAHAYA (LUMINANCE) ---
+        // Rumus Relative Luminance (0 sangat gelap, 255 sangat terang)
+        const luminance = (0.299 * color.r) + (0.587 * color.g) + (0.114 * color.b);
+        const warningElement = document.getElementById('color-warning');
+        
+        // Ambang batas kegelapan (threshold). Nilai 40 ke bawah biasanya terlalu gelap
+        if (luminance < 40) {
+            warningElement.style.display = 'block'; // Tampilkan peringatan
+        } else {
+            warningElement.style.display = 'none';  // Sembunyikan peringatan
+        }
+        // ----------------------------------------------------------
+
         // Update UI Inspector
         inspectorPanel.classList.remove('hidden');
         colorBox.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
