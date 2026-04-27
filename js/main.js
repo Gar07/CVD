@@ -191,38 +191,86 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => { isInspectorActive = true; }, 1000); 
     });
 
+    // Database Warna Super Lengkap untuk Resolusi Jarak Euclidean yang Akurat
     const colorPalette = [
-        { name: 'Merah', r: 255, g: 0, b: 0 },
+        // --- KELOMPOK MERAH ---
+        { name: 'Merah Murni', r: 255, g: 0, b: 0 },
         { name: 'Merah Gelap', r: 139, g: 0, b: 0 },
-        { name: 'Merah Bata', r: 178, b: 34, g: 34 },
+        { name: 'Merah Marun', r: 128, g: 0, b: 0 },
+        { name: 'Merah Bata', r: 178, g: 34, b: 34 },
+        { name: 'Merah Tomat', r: 255, g: 99, b: 71 },
+        { name: 'Merah Koral', r: 255, g: 127, b: 80 },
+        { name: 'Merah Hati', r: 100, g: 20, b: 20 },
+
+        // --- KELOMPOK MERAH MUDA (PINK) ---
         { name: 'Merah Muda / Pink', r: 255, g: 192, b: 203 },
-        { name: 'Magenta', r: 255, g: 0, b: 255 },
-        { name: 'Jingga / Oranye', r: 255, g: 165, b: 0 },
+        { name: 'Pink Cerah', r: 255, g: 105, b: 180 },
+        { name: 'Fuchsia / Magenta', r: 255, g: 0, b: 255 },
+        { name: 'Salem / Peach', r: 255, g: 218, b: 185 },
+
+        // --- KELOMPOK ORANYE ---
+        { name: 'Oranye', r: 255, g: 165, b: 0 },
         { name: 'Oranye Gelap', r: 255, g: 140, b: 0 },
-        { name: 'Kuning', r: 255, g: 255, b: 0 },
+        { name: 'Jingga', r: 255, g: 69, b: 0 },
+        { name: 'Kuning Kunyit', r: 218, g: 165, b: 32 },
+
+        // --- KELOMPOK KUNING ---
+        { name: 'Kuning Murni', r: 255, g: 255, b: 0 },
         { name: 'Kuning Pucat', r: 255, g: 255, b: 224 },
         { name: 'Kuning Emas', r: 255, g: 215, b: 0 },
-        { name: 'Hijau', r: 0, g: 255, b: 0 },
+        { name: 'Kuning Lemon', r: 255, g: 250, b: 205 },
+        { name: 'Kuning Mustard', r: 255, g: 219, b: 88 },
+
+        // --- KELOMPOK HIJAU ---
+        { name: 'Hijau Murni', r: 0, g: 255, b: 0 },
         { name: 'Hijau Daun', r: 34, g: 139, b: 34 },
         { name: 'Hijau Gelap', r: 0, g: 100, b: 0 },
         { name: 'Hijau Zaitun / Olive', r: 128, g: 128, b: 0 },
+        { name: 'Hijau Lumut', r: 85, g: 107, b: 47 },
+        { name: 'Hijau Army', r: 75, g: 83, b: 32 },
+        { name: 'Hijau Sage', r: 138, g: 154, b: 91 },    // Akan menangkap warna pudar
+        { name: 'Hijau Pudar', r: 143, g: 188, b: 143 },  // Memperbaiki deteksi RGB 132, 174, 104
+        { name: 'Hijau Teh / Matcha', r: 208, g: 240, b: 192 },
+        { name: 'Hijau Mint', r: 152, g: 255, b: 152 },
+        { name: 'Hijau Neon', r: 57, g: 255, b: 20 },
+        { name: 'Hijau Limau / Lime', r: 50, g: 205, b: 50 },
+
+        // --- KELOMPOK BIRU & TOSCA ---
         { name: 'Hijau Tosca / Cyan', r: 0, g: 255, b: 255 },
-        { name: 'Biru', r: 0, g: 0, b: 255 },
+        { name: 'Tosca Gelap / Teal', r: 0, g: 128, b: 128 },
+        { name: 'Biru Kehijauan / Turquoise', r: 64, g: 224, b: 208 },
+        { name: 'Biru Murni', r: 0, g: 0, b: 255 },
         { name: 'Biru Langit', r: 135, g: 206, b: 235 },
+        { name: 'Biru Muda', r: 173, g: 216, b: 230 },
+        { name: 'Biru Laut', r: 0, g: 105, b: 148 },
         { name: 'Biru Dongker / Navy', r: 0, g: 0, b: 128 },
-        { name: 'Biru Kehijauan / Teal', r: 0, g: 128, b: 128 },
-        { name: 'Ungu', r: 128, g: 0, b: 128 },
-        { name: 'Ungu Muda / Lavender', r: 230, g: 230, b: 250 },
+        { name: 'Biru Pudar / Denim', r: 96, g: 130, b: 182 },
+
+        // --- KELOMPOK UNGU ---
+        { name: 'Ungu Murni', r: 128, g: 0, b: 128 },
+        { name: 'Ungu Gelap', r: 75, g: 0, b: 130 },
         { name: 'Ungu Terang / Violet', r: 238, g: 130, b: 238 },
+        { name: 'Ungu Muda / Lavender', r: 230, g: 230, b: 250 },
+        { name: 'Nila / Indigo', r: 75, g: 0, b: 130 },
+
+        // --- KELOMPOK COKELAT ---
         { name: 'Cokelat', r: 165, g: 42, b: 42 },
+        { name: 'Cokelat Gelap', r: 101, g: 67, b: 33 },
         { name: 'Cokelat Kayu', r: 139, g: 69, b: 19 },
+        { name: 'Cokelat Tanah', r: 210, g: 180, b: 140 },
+        { name: 'Khaki', r: 240, g: 230, b: 140 },
         { name: 'Krem / Beige', r: 245, g: 245, b: 220 },
+
+        // --- KELOMPOK NETRAL (HITAM, PUTIH, ABU) ---
         { name: 'Putih', r: 255, g: 255, b: 255 },
-        { name: 'Abu-abu Terang', r: 192, g: 192, b: 192 },
+        { name: 'Putih Tulang / Ivory', r: 255, g: 255, b: 240 },
+        { name: 'Abu-abu Terang', r: 211, g: 211, b: 211 },
         { name: 'Abu-abu', r: 128, g: 128, b: 128 },
-        { name: 'Abu-abu Gelap', r: 64, g: 64, b: 64 },
+        { name: 'Abu-abu Gelap', r: 105, g: 105, b: 105 },
         { name: 'Abu-abu Kebiruan', r: 112, g: 128, b: 144 },
-        { name: 'Hitam', r: 0, g: 0, b: 0 }
+        { name: 'Abu-abu Kehijauan', r: 112, g: 130, b: 112 },
+        { name: 'Hitam', r: 0, g: 0, b: 0 },
+        { name: 'Hitam Pekat', r: 20, g: 20, b: 20 }
     ];
 
     function getClosestColorName(r, g, b) {
