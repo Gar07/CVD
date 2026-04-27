@@ -191,32 +191,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => { isInspectorActive = true; }, 1000); 
     });
 
-    // Database Warna Sederhana untuk deteksi (Bisa ditambah untuk skripsi)
     const colorPalette = [
         { name: 'Merah', r: 255, g: 0, b: 0 },
-        { name: 'Merah Tua', r: 139, g: 0, b: 0 },
-        { name: 'Hijau', r: 0, g: 255, b: 0 },
-        { name: 'Hijau Tua', r: 0, g: 100, b: 0 },
-        { name: 'Biru', r: 0, g: 0, b: 255 },
-        { name: 'Biru Muda', r: 135, g: 206, b: 235 },
+        { name: 'Merah Gelap', r: 139, g: 0, b: 0 },
+        { name: 'Merah Bata', r: 178, b: 34, g: 34 },
+        { name: 'Merah Muda / Pink', r: 255, g: 192, b: 203 },
+        { name: 'Magenta', r: 255, g: 0, b: 255 },
+        { name: 'Jingga / Oranye', r: 255, g: 165, b: 0 },
+        { name: 'Oranye Gelap', r: 255, g: 140, b: 0 },
         { name: 'Kuning', r: 255, g: 255, b: 0 },
-        { name: 'Oranye', r: 255, g: 165, b: 0 },
+        { name: 'Kuning Pucat', r: 255, g: 255, b: 224 },
+        { name: 'Kuning Emas', r: 255, g: 215, b: 0 },
+        { name: 'Hijau', r: 0, g: 255, b: 0 },
+        { name: 'Hijau Daun', r: 34, g: 139, b: 34 },
+        { name: 'Hijau Gelap', r: 0, g: 100, b: 0 },
+        { name: 'Hijau Zaitun / Olive', r: 128, g: 128, b: 0 },
+        { name: 'Hijau Tosca / Cyan', r: 0, g: 255, b: 255 },
+        { name: 'Biru', r: 0, g: 0, b: 255 },
+        { name: 'Biru Langit', r: 135, g: 206, b: 235 },
+        { name: 'Biru Dongker / Navy', r: 0, g: 0, b: 128 },
+        { name: 'Biru Kehijauan / Teal', r: 0, g: 128, b: 128 },
         { name: 'Ungu', r: 128, g: 0, b: 128 },
-        { name: 'Merah Muda', r: 255, g: 192, b: 203 },
-        { name: 'Coklat', r: 139, g: 69, b: 19 },
+        { name: 'Ungu Muda / Lavender', r: 230, g: 230, b: 250 },
+        { name: 'Ungu Terang / Violet', r: 238, g: 130, b: 238 },
+        { name: 'Cokelat', r: 165, g: 42, b: 42 },
+        { name: 'Cokelat Kayu', r: 139, g: 69, b: 19 },
+        { name: 'Krem / Beige', r: 245, g: 245, b: 220 },
         { name: 'Putih', r: 255, g: 255, b: 255 },
+        { name: 'Abu-abu Terang', r: 192, g: 192, b: 192 },
         { name: 'Abu-abu', r: 128, g: 128, b: 128 },
+        { name: 'Abu-abu Gelap', r: 64, g: 64, b: 64 },
+        { name: 'Abu-abu Kebiruan', r: 112, g: 128, b: 144 },
         { name: 'Hitam', r: 0, g: 0, b: 0 }
     ];
 
-    // Algoritma Euclidean Distance untuk mencari warna terdekat
     function getClosestColorName(r, g, b) {
         let minDistance = Infinity;
         let closestName = 'Tidak Diketahui';
 
         for (let i = 0; i < colorPalette.length; i++) {
             const c = colorPalette[i];
-            // Rumus jarak titik 3D
+            
             const distance = Math.sqrt(
                 Math.pow(c.r - r, 2) + 
                 Math.pow(c.g - g, 2) + 
