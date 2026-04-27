@@ -7,7 +7,7 @@
 
 Aplikasi **Progressive Web App (PWA)** aksesibilitas visual berbasis *Client-Side Edge Computing*. Aplikasi ini menggunakan akselerasi perangkat keras **WebGL** dan algoritma matematika **Daltonization** yang ditulis dalam bahasa *GLSL Shader* untuk mengoreksi dan menyimulasikan 8 jenis anomali buta warna secara *real-time* (60 FPS) melalui kamera perangkat.
 
-Dikembangkan sebagai luaran Skripsi Program Studi Ilmu Komputer, Universitas Negeri Medan.
+Dikembangkan oleh Gilbert Aldrich Rumahorbo
 
 ## ✨ Fitur Utama
 - **⚡ Akselerasi GPU (WebGL):** Pemrosesan citra *real-time* tanpa latensi jaringan (bebas server).
@@ -23,8 +23,8 @@ Karena aplikasi ini menggunakan API Kamera (`getUserMedia`), *browser* mewajibka
 
 1. Kloning repositori ini:
    ```bash
-   git clone [https://github.com/Gar2007/cvd-corrector-pwa.git](https://github.com/Gar2007/cvd-corrector-pwa.git)
-   cd cvd-corrector-pwa
+   git clone [https://github.com/Gar07/CVD.git](https://github.com/Gar07/CVD.git)
+   cd CVD
 2. Jalankan Local Web Server. Jika Anda menggunakan Python, jalankan:
    ```bash
    python3 -m http.server 8000```
