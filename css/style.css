@@ -478,3 +478,208 @@ input[type="range"] {
 .text-center {
     text-align: center;
 }
+
+/* Styling Modal Dokumentasi Modern */
+.info-modal-content {
+    background: #121212;
+    border: 1px solid #333;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    color: #e0e0e0;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.modal-header h1 {
+    color: #4CAF50;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+
+.modal-header p {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Navigasi Tab Modern */
+.tab-navigation {
+    background: #1e1e1e;
+    padding: 5px;
+    border-radius: 12px;
+    display: flex;
+    gap: 5px;
+}
+
+.tab-btn {
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #aaa;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-btn.active {
+    background: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Tipografi & Konten Dokumentasi */
+.doc-section {
+    margin-bottom: 30px;
+}
+
+.doc-section h2 {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 12px;
+    border-left: 4px solid #4CAF50;
+    padding-left: 12px;
+}
+
+.highlight-box {
+    background: rgba(76, 175, 80, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+/* Grid & Card System */
+.cvd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cvd-card {
+    background: #1e1e1e;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.cvd-card h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Tutorial Steps */
+.step-card {
+    display: flex;
+    gap: 20px;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #2a2a2a;
+}
+
+.step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: rgba(76, 175, 80, 0.2);
+}
+
+.step-body h4 {
+    color: #4CAF50;
+    margin-bottom: 8px;
+}
+
+.step-body p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Footer Proyek */
+.dev-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.dev-item {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.dev-logo {
+    width: 60px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.5));
+}
+
+@media screen and (max-width: 768px) {
+    .info-modal-content {
+        padding: 15px;
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .modal-header h1 {
+        font-size: 20px;
+    }
+
+    .tab-navigation {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .tab-btn {
+        padding: 8px 5px;
+        font-size: 13px;
+        flex: 1 1 auto;
+    }
+
+    .cvd-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step-card {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .step-number {
+        font-size: 28px;
+        line-height: 1;
+    }
+
+    .step-body h4 {
+        font-size: 15px;
+    }
+    
+    .doc-section h2 {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .tab-navigation {
+        flex-direction: column;
+    }
+}
+
+.img-tutorial {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 12px auto;
+    border-radius: 8px; 
+    border: 1px solid #333; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+@media screen and (min-width: 768px) {
+    .img-tutorial {
+        max-width: 80%;
+    }
+}

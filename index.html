@@ -84,83 +84,136 @@
         <div class="modal-content info-modal-content">
             <span id="close-modal" class="close">&times;</span>
             
+            <div class="modal-header">
+                <h1>Pusat Informasi & Dokumentasi</h1>
+                <p>Real-Time Color Blindness Corrector & Simulator v1.0.0</p>
+            </div>
+
             <div class="tab-navigation">
-                <button class="tab-btn active" data-target="tab-edukasi">📚 Edukasi</button>
-                <button class="tab-btn" data-target="tab-panduan">📖 Panduan</button>
-                <button class="tab-btn" data-target="tab-tentang">👥 Tentang</button>
+                <button class="tab-btn active" data-target="tab-edukasi">🧬 Teori & Sains</button>
+                <button class="tab-btn" data-target="tab-panduan">📖 Panduan Teknis</button>
+                <button class="tab-btn" data-target="tab-tentang">👥 Tim Proyek</button>
             </div>
             <hr class="tab-divider">
 
             <div id="tab-edukasi" class="tab-content active">
-                <h2>Memahami Color Vision Deficiency (CVD)</h2>
-                <p class="intro-text">Buta warna terjadi ketika sel kerucut (<i>cone cells</i>) pada retina mata mengalami kelainan atau tidak ada. Manusia memiliki 3 jenis sel kerucut: <b>L</b> (Long/Merah), <b>M</b> (Medium/Hijau), dan <b>S</b> (Short/Biru).</p>
-                
-                <div class="edu-section">
-                    <h3>🔴 Kategori Protan (Kelainan Reseptor Merah)</h3>
-                    <ul>
-                        <li><b>Protanopia:</b> Ketiadaan total sel kerucut merah. Warna merah terlihat sangat gelap, hampir seperti hitam atau coklat tua.</li>
-                        <li><b>Protanomali:</b> Sel kerucut merah bermutasi. Penderita masih bisa melihat merah, namun spektrumnya bergeser mendekati hijau, membuat warna memudar.</li>
-                    </ul>
-                </div>
-                
-                <div class="edu-section">
-                    <h3>🟢 Kategori Deutan (Kelainan Reseptor Hijau)</h3>
-                    <p><i>Merupakan jenis buta warna paling umum di dunia.</i></p>
-                    <ul>
-                        <li><b>Deuteranopia:</b> Ketiadaan total sel kerucut hijau. Warna merah dan hijau sangat sulit dibedakan dan sering terlihat sebagai spektrum warna kuning atau kecoklatan.</li>
-                        <li><b>Deuteranomali:</b> Kelemahan pada reseptor hijau. Kontras antara warna merah, hijau, kuning, dan oranye menjadi sangat rendah.</li>
-                    </ul>
-                </div>
-                
-                <div class="edu-section">
-                    <h3>🔵 Kategori Tritan & Lainnya</h3>
-                    <ul>
-                        <li><b>Tritanopia/Tritanomali:</b> Kelainan reseptor biru yang sangat langka. Sulit membedakan warna biru dari hijau, serta kuning dari ungu.</li>
-                        <li><b>Achromatopsia:</b> Buta warna total (Monokromasi). Penderita hanya melihat dunia dalam skala abu-abu, hitam, dan putih, disertai sensitivitas tinggi terhadap cahaya (Photophobia).</li>
-                    </ul>
-                </div>
+                <section class="doc-section">
+                    <h2>Dasar Teori: Ruang Warna LMS</h2>
+                    <p>Mata manusia menangkap cahaya melalui tiga jenis sel kerucut: <b>L</b> (Long/Merah), <b>M</b> (Medium/Hijau), dan <b>S</b> (Short/Biru). Penderita buta warna mengalami anomali atau ketiadaan pada salah satu sel ini, yang menyebabkan spektrum warna tertentu "tumpang tindih" atau hilang.</p>
+                    </section>
 
-                <div class="edu-section highlight-section">
-                    <h3>💻 Bagaimana Algoritma Daltonization Bekerja?</h3>
-                    <p>Aplikasi ini tidak sekadar menukar warna. Algoritma <b>Daltonization</b> di dalam GPU bekerja melalui 3 tahap komputasi linier:</p>
-                    <ol>
-                        <li><b>Transformasi:</b> Mengubah warna dari ruang RGB layar ke ruang respons mata manusia (LMS).</li>
-                        <li><b>Kalkulasi Error:</b> Menyimulasikan mata buta warna untuk mencari informasi spektrum cahaya mana yang "hilang" atau tak terlihat.</li>
-                        <li><b>Kompensasi (Shifting):</b> Mendistribusikan warna yang hilang tersebut ke spektrum warna lain yang masih sehat (misalnya mengubah konflik merah-hijau menjadi kontras biru-kuning terang) agar objek bisa dibedakan.</li>
-                    </ol>
-                </div>
+                <section class="doc-section highlight-box">
+                    <h2>Algoritma Daltonization & WebGL</h2>
+                    <p>Aplikasi ini menggunakan metode <b>Daltonization</b>, yaitu teknik komputasi aljabar linier yang memetakan ulang informasi warna yang hilang ke dalam spektrum yang masih bisa ditangkap oleh mata pengguna. Proses ini dilakukan melalui <b>WebGL Fragment Shader</b>, di mana jutaan piksel video diproses secara paralel langsung di GPU perangkat untuk menjamin performa 60 FPS tanpa beban pada CPU.</p>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Klasifikasi Gangguan Penglihatan Warna</h2>
+                    <div class="cvd-grid">
+                        <div class="cvd-card">
+                            <h4>🔴 Protan (Merah)</h4>
+                            <p>Kesulitan melihat spektrum cahaya merah panjang. Terbagi menjadi Protanomali (lemah) dan Protanopia (buta total).</p>
+                            <p>-> Protanopia: Ketiadaan total sel kerucut merah. Warna merah terlihat sangat gelap, hampir seperti hitam atau coklat tua.<br>
+                            -> Protanomali: Sel kerucut merah bermutasi. Penderita masih bisa melihat merah, namun spektrumnya bergeser mendekati hijau, membuat warna memudar.</p>
+                        </div>
+                        <div class="cvd-card">
+                            <h4>🟢 Deutan (Hijau)</h4>
+                            <p>Kelainan paling umum. Kesulitan membedakan variasi warna merah dan hijau.</p>
+                            <p>-> Deuteranopia: Ketiadaan total sel kerucut hijau. Warna merah dan hijau sangat sulit dibedakan dan sering terlihat sebagai spektrum warna kuning atau kecoklatan.<br>
+                            -> Deuteranomali: Kelemahan pada reseptor hijau. Kontras antara warna merah, hijau, kuning, dan oranye menjadi sangat rendah.</p>
+                        </div>
+                        <div class="cvd-card">
+                            <h4>🔵 Tritan (Biru)</h4>
+                            <p>Kelainan langka. Kesulitan membedakan warna biru dari hijau dan kuning dari ungu.</p>
+                            <p>-> Tritanopia: Ketiadaan total sel kerucut biru. Warna biru terlihat hijau, dan kuning terlihat ungu atau abu-abu.<br>
+                        </div>
+                        <div class="cvd-card">
+                            <h4>⚫ Achromatopsia (Monokrom)</h4>
+                            <p>Kelainan paling parah. Tidak bisa melihat warna sama sekali, hanya dalam gradasi abu-abu.</p>
+                            <p>-> Achromatopsia: Ketiadaan total sel kerucut. Penglihatan sangat sensitif terhadap cahaya, dan semua warna terlihat sebagai nuansa abu-abu.</p>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <div id="tab-panduan" class="tab-content hidden">
-                <h2>Panduan Penggunaan Aplikasi</h2>
-                <div class="edu-section">
-                    <ul>
-                        <li><b>🔍 Color Inspector:</b> Sentuh objek/area mana saja pada layar video untuk mendeteksi nama warna dan nilai RGB-nya secara <i>real-time</i>.</li>
-                        <li><b>🎚️ Mode Split-Screen:</b> Tekan tombol "Split: OFF" di atas menjadi ON. Sebuah tuas transparan akan muncul menutupi layar. Geser layar ke kiri/kanan untuk membandingkan warna asli kamera dengan warna hasil koreksi WebGL.</li>
-                        <li><b>🔦 Fitur Senter:</b> Gunakan tombol Senter di lingkungan minim cahaya untuk meningkatkan akurasi deteksi warna (Hanya berlaku untuk kamera belakang <i>smartphone</i>).</li>
-                        <li><b>📁 Unggah Gambar:</b> Anda bisa menguji aplikasi ini menggunakan tes buta warna Ishihara dari galeri gawai Anda dengan menekan tombol "Unggah".</li>
-                        <li><b>📸 Simpan Gambar:</b> Anda bisa menyimpan gambar hasil algoritma Daltonization, atau hasil Simulasi dari aplikasi ini ke galeri dengan menekan tombol "Simpan".</li>
-                        <li><b>👁️ Sembunyikan UI:</b> Menghilangkan seluruh antarmuka agar Anda bisa menggunakan perangkat layaknya kacamata pintar yang imersif.</li>
-                    </ul>
+                <h2>Tutorial Penggunaan Fitur</h2>
+                
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-body">
+                        <h4>Pemberian Izin Kamera</h4>
+                        <p>Saat pertama kali dibuka, sistem akan meminta izin akses kamera. Pilih <b>"Izinkan"</b>. Gunakan tombol <b>📷 Kamera</b> di pojok atas untuk kembali ke mode kamera jika sedang berada di mode unggah foto.</p>
+                        <img src="./img/camera-permission.jpeg" alt="Contoh Permintaan Izin Kamera" class="img-tutorial">
+                        </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-body">
+                        <h4>Memilih Mode Operasional</h4>
+                        <p>Pilih antara <b>🛠️ Koreksi</b> (untuk membantu membedakan warna) atau <b>👁️ Simulasi</b> (untuk melihat apa yang dilihat penderita buta warna). Gunakan <b>Dropdown</b> untuk memilih jenis spesifik (misal: Deuteranopia).</p>
+                        <img src="./img/mode.jpeg" alt="Contoh Mode Operasional" class="img-tutorial">
+                        </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-body">
+                        <h4>Memilih Jenis Buta Warna</h4>
+                        <p>Setelah dropdown dipilih, pilih jenis buta warna yang sesuai (misal: Protanopia, Deuteranopia, Tritanopia).</p>
+                        <img src="./img/dropdown1.jpeg" alt="Contoh Mode Buta Warna" class="img-tutorial"><br>
+                        <img src="./img/dropdown2.jpeg" alt="Contoh Mode Buta Warna" class="img-tutorial">
+                        </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <div class="step-body">
+                        <h4>Fitur Split-Screen (Komparasi)</h4>
+                        <p>Aktifkan tombol <b>🎚️ Split: OFF</b> menjadi <b>ON</b>. Garis putih akan muncul di tengah layar. Geser jari Anda pada area layar mana saja untuk menggeser garis tersebut. Sisi kiri menunjukkan hasil proses, sisi kanan menunjukkan warna asli.</p>
+                        <img src="./img/split-screen.jpeg" alt="Contoh Fitur Split-Screen" class="img-tutorial">
+                        </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">05</div>
+                    <div class="step-body">
+                        <h4>Deteksi Warna (Color Inspector)</h4>
+                        <p>Pastikan mode Split dalam posisi <b>OFF</b>. Ketuk pada objek tertentu di layar video. Panel di atas akan menampilkan <b>Nama Warna</b> (Bahasa Indonesia) dan nilai <b>RGB</b>. Jika cahaya kurang, sistem akan memberikan peringatan akurasi rendah.</p>
+                        <img src="./img/color-inspector.jpeg" alt="Contoh Deteksi Warna" class="img-tutorial">
+                        </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">06</div>
+                    <div class="step-body">
+                        <h4>Penerangan & Penyimpanan</h4>
+                        <p>Gunakan <b>🔦 Senter</b> untuk membantu akurasi warna di tempat gelap. Gunakan <b>📸 Simpan</b> untuk mengambil foto hasil olahan WebGL langsung ke galeri Anda.</p>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">07</div>
+                    <div class="step-body">
+                        <h4>Install Aplikasi</h4>
+                        <p>Saat membuka website pertama kali, akan ada opsi untuk menginstall aplikasi. Tekan "📲 Instal App" untuk menginstall untuk menginstal aplikasi ke perangkat Anda. Atau jika terlewat, di browser anda, masuk ke menu titik tiga di pojok kanan atas, lalu pilih "Tambahkan ke Layar Utama"</p>
+                        <img src="./img/install-app.jpeg" alt="Contoh Install Aplikasi" class="img-tutorial"><br>
+                        <img src="./img/install-app-alt.jpeg" alt="Contoh Install Aplikasi" class="img-tutorial">
+                    </div>
                 </div>
             </div>
 
             <div id="tab-tentang" class="tab-content hidden">
-                <h2>Tentang Proyek Perangkat Lunak</h2>
-                <div class="edu-section text-center">
-                    <p><b>Aplikasi Real-Time Color Blindness Corrector (PWA)</b></p>
-                    <p>Versi 1.0.0 (Akselerasi GPU WebGL)</p>
-                    <hr style="margin: 10px 0; border-color: #555;">
-                    <p>Dikembangkan sebagai Tugas Mata Kuliah<br><b>Rekayasa Perangkat Lunak (RPL)</b></p>
-                    <br>
-                    <p><b>Tim Pengembang (Kelompok 7):</b></p>
-                    <ul style="list-style: none; padding: 0; color: #4CAF50; font-weight: bold;">
-                        <li>Gilbert Aldrich Rumahorbo</li>
-                        <li>Nazwa Aidilia Octa Mevia</li>
-                        <li>Yohana Kartika Marbun</li>
-                    </ul>
-                    <br>
-                    <p>Program Studi Ilmu Komputer<br>Fakultas Matematika dan Ilmu Pengetahuan Alam<br><b>Universitas Negeri Medan</b><br>2026</p>
+                <div class="about-header text-center">
+                    <img src="logo.png" alt="Logo Proyek" class="dev-logo">
+                    <h2>Kelompok 7 - PSIK 24B</h2>
+                    <p>Universitas Negeri Medan</p>
+                </div>
+                <div class="dev-grid">
+                    <div class="dev-item"><strong>Gilbert Aldrich Rumahorbo</strong><br>Lead Developer & Architect</div>
+                    <div class="dev-item"><strong>Nazwa Aidilia Octa Mevia</strong></div>
+                    <div class="dev-item"><strong>Yohana Kartika Marbun</strong></div>
                 </div>
             </div>
         </div>
