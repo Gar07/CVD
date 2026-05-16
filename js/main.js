@@ -104,6 +104,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // --- FITUR GANTI KAMERA (DEPAN/BELAKANG) ---
+    const btnSwitchCam = document.getElementById('btn-switch-cam');
+    
+    btnSwitchCam.addEventListener('click', async () => {
+        // Tampilkan indikator loading atau hentikan sejenak (opsional, tapi terlihat lebih mulus)
+        const size = await camera.switchCamera();
+        
+        if (size) {
+            // Re-bind sumber kamera baru ke GPU Renderer
+            renderer.setSource(videoElement);
+            
+            // Kalkulasi ulang rasio layar GPU jika resolusi kamera depan berbeda
+            renderer.resizeCanvas(); 
+            
+            // Reset warna tombol senter (karena jika berganti kamera, senter otomatis mati)
+            const btnTorch = document.getElementById('btn-torch');
+            if (btnTorch) btnTorch.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        }
+    });
+
     // --- FITUR SIMPAN FOTO (BARU) ---
     const btnSnapshot = document.getElementById('btn-snapshot');
     btnSnapshot.addEventListener('click', () => {
